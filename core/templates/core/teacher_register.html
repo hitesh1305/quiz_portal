@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+            width: 420px;
+            text-align: center;
+        }
+
+        .title {
+            font-family: 'Roboto Slab', serif;
+            color: #222;
+            font-size: 26px;
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #bbb;
+            border-radius: 12px;
+            font-size: 15px;
+        }
+
+        button {
+            background: #1f4037;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #14532d;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        a {
+            color: #1f4037;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-card">
+        <div class="title">Create Teacher Account</div>
+        <form method="POST" action="/teacher/register/">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <div class="footer">
+            Already registered? <a href="/teacher/login/">Login here</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Submitted Quizzes{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Submitted Quizzes</h2>
+
+    {% if attempted_quizzes %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Quiz Name</th>
+                    <th>Score</th>
+                    <th>Attempted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in attempted_quizzes %}
+                    <tr>
+                        <td><a href="{% url 'quiz_result' item.quiz.id %}">{{ item.quiz.name }}</a></td>
+                        <td>{{ item.score }}</td>
+                        <td>{{ item.attempted_at|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">You haven't submitted any quizzes yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

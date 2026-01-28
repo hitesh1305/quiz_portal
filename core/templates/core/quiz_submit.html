@@ -1,0 +1,11 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Test Submitted!</h2>
+    <p>Thank you for submitting your quiz. Your score is:</p>
+    <h3>{{ score }} / {{ total }}</h3>
+    <p>You can view the results anytime on your dashboard.</p>
+    <a href="{% url 'student_dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+  </div>
+{% endblock %}

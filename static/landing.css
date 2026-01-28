@@ -1,0 +1,18 @@
+body {
+    background: url('/static/core/images/bg-pattern.png') no-repeat center center fixed;
+    background-size: cover;
+  }
+  
+  .card {
+    border-radius: 1rem;
+  }
+  
+  .btn {
+    width: 150px;
+    transition: transform 0.2s;
+  }
+  
+  .btn:hover {
+    transform: scale(1.1);
+  }
+  

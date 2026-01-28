@@ -1,0 +1,14 @@
+<!-- core/templates/core/confirm_delete.html -->
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <h2>Are you sure you want to delete the quiz "{{ quiz.title }}"?</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit">Yes, delete quiz</button>
+  </form>
+
+  <a href="{% url 'teacher_dashboard' %}">Cancel</a>
+{% endblock %}

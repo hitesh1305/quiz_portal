@@ -1,0 +1,30 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+  <div class="quiz-container">
+    <h2>{{ question.text }}</h2>  <!-- Display question text -->
+
+    <form method="POST">
+      {% csrf_token %}
+      <ul class="options-list">
+        {% for option in question.options.all %}
+          <li>
+            <label>
+              <input type="radio" name="answer" value="{{ option.id }}" /> {{ option.option_text }}
+            </label>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- If the quiz is already submitted, display the correct answer -->
+    {% if submitted %}
+      <div class="correct-answer">
+        <h4>Correct Answer:</h4>
+        <p>{{ correct_answer.option_text }}</p>  <!-- Display the correct answer -->
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

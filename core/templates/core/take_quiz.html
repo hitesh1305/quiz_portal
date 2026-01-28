@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+{% load tz %}
+
+{% block title %}{{ quiz.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="card shadow p-4">
+        <h2 class="text-primary">{{ quiz.name }}</h2>
+        <h5 class="text-muted">{{ quiz.description }}</h5>
+        <p><strong>Start Time:</strong> {{ quiz.start_time|localtime }}</p>
+        <p><strong>End Time:</strong> {{ quiz.end_time|localtime }}</p>
+
+        <form method="post" action="{% url 'submit_quiz' quiz.id %}">
+            {% csrf_token %}
+
+            {% for question in questions %}
+                <div class="card my-4 question-container {% if forloop.first %}active{% endif %}" id="question-{{ forloop.counter0 }}">
+                    <div class="card-body">
+                        <h5 class="font-weight-bold">Q{{ forloop.counter }}: {{ question.text }}</h5>
+
+                        <div class="options-list">
+                            {% for option in question.options_set.all %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio"
+                                           name="question_{{ question.id }}"
+                                           id="option_{{ question.id }}_{{ forloop.counter }}"
+                                           value="{{ option.id }}" required>
+                                    <label class="form-check-label"
+                                           for="option_{{ question.id }}_{{ forloop.counter }}">
+                                        {{ option.option_text }}
+                                    </label>
+                                </div>
+                            {% empty %}
+                                <p class="text-danger">⚠ No options available for this question.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-danger">⚠ No questions available in this quiz.</p>
+            {% endfor %}
+
+            <div class="text-center mt-4">
+                <button type="button" id="prevBtn" class="btn btn-secondary btn-lg me-2">Previous</button>
+                <button type="button" id="nextBtn" class="btn btn-primary btn-lg">Next</button>
+                <button type="submit" id="submitBtn" class="btn btn-success btn-lg" style="display: none;">Submit Quiz</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .question-container { display: none; }
+    .question-container.active { display: block; }
+    .options-list { margin-top: 10px; padding-left: 20px; }
+    .form-check { margin-bottom: 12px; }
+    .form-check-label { font-size: 1.1rem; }
+    .card-body { padding: 1.25rem; }
+    body { padding-bottom: 80px; }
+    footer { position: relative; }
+</style>
+
+<script>
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll('.question-container');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showQuestion(index) {
+        questions.forEach((q, i) => {
+            q.classList.toggle('active', i === index);
+        });
+
+        prevBtn.style.display = index === 0 ? 'none' : 'inline-block';
+        nextBtn.style.display = index === questions.length - 1 ? 'none' : 'inline-block';
+        submitBtn.style.display = index === questions.length - 1 ? 'inline-block' : 'none';
+    }
+
+    nextBtn.addEventListener('click', () => {
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            showQuestion(currentQuestion);
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            showQuestion(currentQuestion);
+        }
+    });
+
+    showQuestion(currentQuestion);
+</script>
+{% endblock %}

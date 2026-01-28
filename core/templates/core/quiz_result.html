@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ quiz.title }} – Result</title>
+  <style>
+    body { background:#121212; color:#fff; font-family:'Segoe UI',sans-serif; padding:30px; }
+    .container { max-width:800px; margin:auto; background:#1e1e1e; border-radius:15px; padding:30px; box-shadow:0 0 15px rgba(0,255,255,0.2); }
+    h1,h2 { color:#00ffff; text-align:center; }
+    .score-box { background:#2c2c2c; border-left:5px solid #00ffff; padding:15px; margin:20px 0; font-size:1.2em; }
+    .question { margin-top:25px; padding:15px; border-left:4px solid #444; background:#2a2a2a; border-radius:10px; }
+    .correct { color:#4caf50; } .incorrect { color:#f44336; }
+    .btn { display:block; width:100%; padding:15px; margin-top:20px; background:#00ffff; color:#121212; text-align:center; border:none; border-radius:5px; font-size:1.2em; cursor:pointer; }
+    .btn:hover { background:#00b3b3; }
+    .footer { text-align:center; margin-top:40px; font-size:0.9em; color:#aaa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>{{ quiz.title }}</h1>
+    <h2>Quiz Results</h2>
+
+    <div class="score-box">
+      <strong>Your Score:</strong> {{ score }} / {{ total }}
+    </div>
+
+    {% for resp in responses %}
+      <div class="question">
+        <p><strong>Q{{ forloop.counter }}:</strong> {{ resp.question.text }}</p>
+        <p>
+          <strong>Your Answer:</strong>
+          {{ resp.selected_option.option_text }}
+          {% if resp.selected_option.is_correct %}
+            <span class="correct">(Correct)</span>
+          {% else %}
+            <span class="incorrect">(Incorrect)</span>
+          {% endif %}
+        </p>
+        <p>
+          <strong>Correct Answer:</strong>
+          {% for opt in resp.question.options_set.all %}
+            {% if opt.is_correct %}{{ opt.option_text }}{% endif %}
+          {% endfor %}
+        </p>
+      </div>
+    {% endfor %}
+
+    <button class="btn" onclick="location.href='{% url 'student_dashboard' %}'">Back to Dashboard</button>
+
+    <div class="footer">
+      &copy; {{ quiz.created_at|date:"Y" }} Quiz Portal. Keep practicing!
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quiz Portal</title>
+        <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+    </head>
+    
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/quizzes/">Quizzes</a></li>
+                <!-- Other menu items -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to the Quiz Portal</h1>
+            <p>Test your knowledge with various quizzes</p>
+        </section>
+
+        <section class="quizzes">
+            <h2>Available Quizzes</h2>
+            <ul>
+                {% for quiz in quizzes %}
+                    <li>
+                        <h3><a href="{% url 'quiz_detail' quiz.id %}">{{ quiz.title }}</a></h3>
+                        <p>{{ quiz.description }}</p>
+                    </li>
+                {% empty %}
+                    <p>No quizzes available at the moment.</p>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quiz Portal. All rights reserved.</p>
+    </footer>
+</body>
+</html>

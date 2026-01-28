@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Portal - Select Role</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+        }
+
+        .role-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .role {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px 50px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            font-size: 1.5em;
+            border: 2px solid white;
+        }
+
+        .role:hover {
+            background-color: white;
+            color: #764ba2;
+        }
+
+        .register-prompt {
+            margin-top: 50px;
+            font-size: 1em;
+        }
+
+        .register-prompt a {
+            color: #ffeb3b;
+            text-decoration: underline;
+        }
+
+        .register-prompt a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Quiz Portal</h1>
+    <div class="role-buttons">
+        <a href="{% url 'student_login' %}" class="role">I am a Student</a>
+        <a href="{% url 'teacher_login' %}" class="role">I am a Teacher</a>
+    </div>
+
+    <p class="register-prompt">
+        New here? 
+        <a href="{% url 'student_register' %}">Register as Student</a> 
+        or 
+        <a href="{% url 'teacher_register' %}">Register as Teacher</a>
+    </p>
+</body>
+</html>
